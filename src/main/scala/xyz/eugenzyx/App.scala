@@ -19,6 +19,6 @@ object App {
       Person(s"name_$i", i, (0 to 1).map { m => Contact(s"contact_$m", s"phone_$m") })
     }
 
-    sc.parallelize(records).toDF().write.format("orc").save("hdfs:///home/mapr/people")
+    sc.parallelize(records).toDF().write.format("orc").save(s"hdfs://${ args(0) }/tmp/people")
   }
 }

@@ -1,0 +1,2 @@
+#!/bin/bash
+/home/hdfs/spark/bin/spark-submit --master local[*] --class xyz.eugenzyx.App --jars datanucleus-core-3.2.10.jar,datanucleus-api-jdo-3.2.6.jar,datanucleus-rdbms-3.2.9.jar SparkOrc-1.0-SNAPSHOT.jar 10.20.30.101:8020
