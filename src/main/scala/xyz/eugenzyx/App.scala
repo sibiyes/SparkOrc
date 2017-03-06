@@ -5,7 +5,7 @@ import org.apache.spark.sql._
 import org.apache.spark.sql.hive.HiveContext
 
 object App {
-  case class Contact(name: String, phone: String)
+  case class Contact(name: String, phone: String, something: Int)
   case class Person(name: String, age: Int, contacts: Seq[Contact])
 
   def main(args: Array[String]) {
@@ -15,10 +15,8 @@ object App {
     val sqlContext = new HiveContext(sc)
     import sqlContext.implicits._
 
-    val records = (1 to 100).map { i =>
-      Person(s"name_$i", i, (0 to 1).map { m => Contact(s"contact_$m", s"phone_$m") })
-    }
+    val contacts = (1 to 100).map(i => Contact(null, i.toString, null))
 
-    sc.parallelize(records).toDF().write.format("orc").save(s"hdfs://${ args(0) }/tmp/people")
+    sc.parallelize(contacts).toDF().write.mode(SaveMode.Overwrite).format("orc").save(s"hdfs://${ args(0) }/tmp/people_null")
   }
 }
